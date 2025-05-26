@@ -27,8 +27,8 @@ import com.ignhcuatro.parcial2.viewmodel.ProductViewModel
 
 @Composable
 fun cartScreen(navController: NavController, viewModel: ProductViewModel = viewModel()) {
-    val search by viewModel.search.collectAsState()
-    val searchResults by viewModel.searchResults.collectAsState()
+//    val search by viewModel.search.collectAsState()
+//    val searchResults by viewModel.searchResults.collectAsState()
 
     Scaffold(
         bottomBar = {
@@ -43,18 +43,24 @@ fun cartScreen(navController: NavController, viewModel: ProductViewModel = viewM
             .fillMaxSize()
         ) {
 
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                TextField(
-                    value = search,
-                    onValueChange = { viewModel.onSearch(it) },
-                    label = { Text("buscar") },
-                    modifier = Modifier.fillMaxWidth()
-                )
+            Text(text = "Tus compras")
 
-            }
+            Spacer(
+                modifier = Modifier.size(10.dp)
+            )
+
+//            Row (
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//            ) {
+//                TextField(
+//                    value = search,
+//                    onValueChange = { viewModel.onSearch(it) },
+//                    label = { Text("buscar") },
+//                    modifier = Modifier.fillMaxWidth()
+//                )
+//
+//            }
 
             Spacer(
                 modifier = Modifier.size(10.dp)

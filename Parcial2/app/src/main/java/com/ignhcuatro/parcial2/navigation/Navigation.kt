@@ -29,7 +29,7 @@ fun Navigation() {
 
         composable(Screen.ProductDetail.route, arguments = listOf(navArgument("productId") { type = NavType.IntType })) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("productId") ?: return@composable
-            ProductDetailScreen(productId = id)
+            ProductDetailScreen(productId = id, navController)
         }
 
         composable(Screen.Cart.route) {

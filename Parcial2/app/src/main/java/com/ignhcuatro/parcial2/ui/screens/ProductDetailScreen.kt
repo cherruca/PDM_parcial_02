@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,13 +23,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.ignhcuatro.parcial2.data.Product
 import com.ignhcuatro.parcial2.data.shoppingList
+import com.ignhcuatro.parcial2.ui.components.mainBottomBar
 import com.ignhcuatro.parcial2.viewmodel.ProductViewModel
 
 @Composable
-fun ProductDetailScreen(productId: Int, viewModel: ProductViewModel = viewModel()) {
+fun ProductDetailScreen(productId: Int, navController: NavController, viewModel: ProductViewModel = viewModel()) {
     val selectedProduct = viewModel.getProduct(productId)
     val context = LocalContext.current
 
@@ -37,54 +40,62 @@ fun ProductDetailScreen(productId: Int, viewModel: ProductViewModel = viewModel(
         return
     }
 
+    Scaffold(
+        bottomBar = {
+            if (navController != null) {
+                mainBottomBar(navController)
+            }
+        }
+    ) { paddingValues ->
 
-    Column (
-        modifier = Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(
-            modifier = Modifier.size(10.dp)
-        )
+        Column (
+            modifier = Modifier.fillMaxSize().padding(paddingValues).padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(
+                modifier = Modifier.size(10.dp)
+            )
 
-        Image(
-            painter = rememberAsyncImagePainter(selectedProduct.image),
-            contentDescription = selectedProduct.name,
-            modifier = Modifier
-                .size(250.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .fillMaxSize(),
-            contentScale = ContentScale.Fit
-        )
+            Image(
+                painter = rememberAsyncImagePainter(selectedProduct.image),
+                contentDescription = selectedProduct.name,
+                modifier = Modifier
+                    .size(250.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .fillMaxSize(),
+                contentScale = ContentScale.Fit
+            )
 
-        Text(
-            text = "Nombre: ${selectedProduct.name}"
-        )
+            Text(
+                text = "Nombre: ${selectedProduct.name}"
+            )
 
-        Spacer(
-            modifier = Modifier.size(10.dp)
-        )
+            Spacer(
+                modifier = Modifier.size(10.dp)
+            )
 
-        Text(
-            text = "Descripcion: ${selectedProduct.description}"
-        )
+            Text(
+                text = "Descripcion: ${selectedProduct.description}"
+            )
 
-        Spacer(
-            modifier = Modifier.size(10.dp)
-        )
+            Spacer(
+                modifier = Modifier.size(10.dp)
+            )
 
-        Text(
-            text = "Categoría: ${selectedProduct.category}"
-        )
+            Text(
+                text = "Categoría: ${selectedProduct.category}"
+            )
 
-        Text(
-            text = "Precio: $ ${selectedProduct.price.toString()}"
-        )
+            Text(
+                text = "Precio: $ ${selectedProduct.price.toString()}"
+            )
 
-        Button(onClick = {
-            shoppingList.add(selectedProduct)
+            Button(onClick = {
+                shoppingList.add(selectedProduct)
 
-            Toast.makeText(context, "Se agregó ${selectedProduct.name} a su carretilla", Toast.LENGTH_LONG).show()
-        }) {
-            Text("Comprar")
+                Toast.makeText(context, "Se agregó ${selectedProduct.name} a su carretilla", Toast.LENGTH_LONG).show()
+            }) {
+                Text("Comprar")
+            }
         }
     }
 
